@@ -10,23 +10,30 @@ public class Entity_Actor : MonoBehaviour {
     private Rigidbody actorRigidbody;
     private BoxCollider actorCollider;
 
-    private int controllerID;
-
     public List<Sprite> starterSprites;
     public int spriteToLoad;
+    private bool isHacking;
 
     // gameplay properties.
     public float actorVelocity;
 
+    public void setIsHacking(bool b)
+    {
+        isHacking = b;
+    }
     void Awake()
     {
         setupCharacter();
+        isHacking = false;
     }
 	
 	void Update ()
     {
         // here we get and set our transformatiion via the direction vector from the controller (we will now be changing vector position)
-        actorRigidbody.velocity = actorController.getControllerDirection() * actorVelocity;
+        if (!isHacking)
+        {
+            actorRigidbody.velocity = actorController.getControllerDirection() * actorVelocity;
+        }
     }
 
     // setup the character via apperance etc. 
@@ -48,11 +55,6 @@ public class Entity_Actor : MonoBehaviour {
 
         // dynamicly adjust the collider accroding to the sprite size
         actorCollider.size = new Vector3(0.15f, 0.2f, 0.0f);
-    }
-
-    public void setControllerID(int newID)
-    {
-        controllerID = newID;
     }
 
 }
