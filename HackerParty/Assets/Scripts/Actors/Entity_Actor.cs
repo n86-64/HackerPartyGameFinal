@@ -10,6 +10,8 @@ public class Entity_Actor : MonoBehaviour {
     private Rigidbody actorRigidbody;
     private BoxCollider actorCollider;
 
+    private int controllerID;
+
     public List<Sprite> starterSprites;
     public int spriteToLoad;
 
@@ -46,6 +48,11 @@ public class Entity_Actor : MonoBehaviour {
 
         // dynamicly adjust the collider accroding to the sprite size
         actorCollider.size = new Vector3(0.15f, 0.2f, 0.0f);
+    }
+
+    public void setControllerID(int newID)
+    {
+        controllerID = newID;
     }
 
 }
