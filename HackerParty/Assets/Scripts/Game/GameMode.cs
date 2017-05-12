@@ -7,17 +7,19 @@ public class GameMode : MonoBehaviour {
     public Sprite[] characterSprites;
     public Animator[] characterAnimators;
 
-    public GameObject spawnPoint; 
+    public GameObject spawnPoint;
+
+    int numberOfControllers;
 
 	// Use this for initialization
 	void Start ()
     {
-	
+        numberOfControllers = Input.GetJoystickNames().Length;
+        instanciateObjects(Input.GetJoystickNames().Length);
 	}
 	
     void Awake()
     {
-
     }
 
 	// Update is called once per frame
@@ -26,7 +28,7 @@ public class GameMode : MonoBehaviour {
 	
 	}
 
-    void instanciateObjects()
+    void instanciateObjects(int controllerNumbers)
     {
 
     }

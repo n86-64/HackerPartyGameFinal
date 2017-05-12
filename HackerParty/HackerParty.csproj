@@ -70,10 +70,13 @@
     <Compile Include="Assets\Scripts\Control\Controller_Actor.cs" />
     <Compile Include="Assets\Scripts\Detection\incognitoBar.cs" />
     <Compile Include="Assets\Scripts\Detection\playerDetect.cs" />
+    <Compile Include="Assets\Scripts\Game\GameMode.cs" />
     <Compile Include="Assets\Scripts\Menu UI\MenuController.cs" />
     <Compile Include="Assets\Scripts\Menu UI\SettingMenuController.cs" />
     <Compile Include="Assets\Scripts\Minigame\Disappear.cs" />
     <Compile Include="Assets\Scripts\Minigame\Hacking1.cs" />
+    <Compile Include="Assets\Scripts\Minigame\OnTriggerSelect.cs" />
+    <Compile Include="Assets\Scripts\NPCMovement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
