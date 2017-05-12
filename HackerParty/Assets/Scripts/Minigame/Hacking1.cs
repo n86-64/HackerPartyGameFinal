@@ -1,22 +1,45 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-public class Hacking : MonoBehaviour {
+public class Hacking1 : MonoBehaviour {
 
     public int state;
     private int hacking;
-    private int hacked;
-
+    private int progress;
+    private bool hacked;
+    private bool beingHacked;
 
     public GameObject[] buttons;
     public string[] buttonInputs;
 
     private float delayTime;
+    private GameObject hackingPlayer;
     private GameObject displayedSprite;
     public GameObject ex;
     public Image image;
     public bool miniGame;
 
+    public void setHackingPlayer(GameObject player)
+    {
+        hackingPlayer = player;
+    }
+    public bool getHacked()
+    {
+        return hacked;
+    }
+
+    public bool getBeingHacked()
+    {
+        return beingHacked;
+    }
+    public void setBeingHacked(bool b)
+    {
+        beingHacked = b;
+    }
+    public void interact()
+    {
+        miniGame = true;
+    }
     // Use this for initialization
 
     void Awake()
@@ -25,7 +48,8 @@ public class Hacking : MonoBehaviour {
     }
     void Start ()
     {
-        miniGame = true;
+        hacked = false;
+        miniGame = false;
         state = 0;
         hacking = (Random.Range(0, 3) + 5);
 	}
@@ -44,7 +68,7 @@ public class Hacking : MonoBehaviour {
                     delayTime = 0f;
                     state = Random.Range(1, 4);
 
-                    displayedSprite = Instantiate(buttons[state - 1]) as GameObject;
+                    displayedSprite = Instantiate(buttons[state - 1], transform.position + new Vector3(0,0,2),transform.rotation) as GameObject;
                 }
             }
             else
@@ -53,7 +77,7 @@ public class Hacking : MonoBehaviour {
                 {
                     if (Input.GetButtonDown(buttonInputs[state - 1]))
                     {
-                        hacked++;
+                        progress++;
                         state = 0;
                         Destroy(displayedSprite.gameObject);
                     }
@@ -67,15 +91,17 @@ public class Hacking : MonoBehaviour {
             
            
 
-            if (hacked == hacking)
+            if (progress == hacking)
             {
                 Debug.Log("hacked m8");
                 miniGame = false;
+                hacked = true;
+                hackingPlayer.GetComponent<Entity_Actor>().setIsHacking(false);
             }
 
-            float fill = (float)hacked / (float)hacking;
+          //  float fill = (float)hacked / (float)hacking;
 
-            image.fillAmount = fill;
+           // image.fillAmount = fill;
         }
     }
 }
