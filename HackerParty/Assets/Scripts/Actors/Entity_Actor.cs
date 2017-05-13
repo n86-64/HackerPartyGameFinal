@@ -44,7 +44,7 @@ public class Entity_Actor : MonoBehaviour {
     {
         if (!isHacking)
         {
-            actorRigidbody.velocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * actorVelocity;
+            actorRigidbody.velocity = new Vector3(Input.GetAxis("Player" + controllerID + "Horizontal"), 0, Input.GetAxis("Player" + controllerID + "Vertical")) * actorVelocity;
         }
     }
 
@@ -76,5 +76,10 @@ public class Entity_Actor : MonoBehaviour {
     {
         actorSprite.sprite = newCharacterSprite;
         actorAnimator = newCharacterAnimation;
+    }
+
+    public int getControllerID()
+    {
+        return controllerID;
     }
 }
