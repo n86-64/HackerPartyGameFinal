@@ -123,7 +123,7 @@ public class MenuController : MonoBehaviour {
     void LoadGame()
     {
         Debug.Log("trying to load main");
-        Application.LoadLevel("BaseScene");
+        Application.LoadLevel("Level");
     }
     
     void QuitGame()

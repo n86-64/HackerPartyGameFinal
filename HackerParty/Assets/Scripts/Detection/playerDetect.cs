@@ -14,6 +14,8 @@ public class playerDetect : MonoBehaviour {
     public bool isSeen = false;
     private bool inRange = false;
 
+    public char facingDirection;
+
     // Use this for initialization
     void Start () {
 
@@ -27,16 +29,39 @@ public class playerDetect : MonoBehaviour {
         {
             incognitoBar incog = players[i].GetComponent<incognitoBar>();
             distance = Vector3.Distance(players[i].transform.position, transform.position);
-            enemyDirection = transform.forward;
 
-            Vector3 ray = transform.TransformDirection(Vector3.forward) * range;
+            //add variable for npc facing and change. up accordingly
+
+            Vector3 ray = new Vector3(0, 0, 0); ;
+            switch(facingDirection)
+            {
+                case 'u':
+                    enemyDirection = transform.up;
+                    ray = transform.TransformDirection(Vector3.up) * range;
+                    break;
+                case 'd':
+                    enemyDirection = transform.up * -1;
+                    ray = transform.TransformDirection(Vector3.down) * range;
+                    break;
+                case 'l':
+                    enemyDirection = transform.right * -1;
+                    ray = transform.TransformDirection(Vector3.left) * range;
+                    break;
+                case 'r':
+                    enemyDirection = transform.right;
+                    ray = transform.TransformDirection(Vector3.right) * range;
+                    break;
+                default:
+                    break;
+            }
+            
             Debug.DrawRay(transform.position, ray, Color.red);
 
             if (distance <= range)
             {
                 inRange = true;
 
-                if (Vector3.Angle(transform.forward, players[i].transform.position - transform.position) < fov)
+                if (Vector3.Angle(enemyDirection, players[i].transform.position - transform.position) < fov)
                 {
                     isSeen = true;
                     incog.detected = true;

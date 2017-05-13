@@ -9,12 +9,10 @@ public class Entity_Actor : MonoBehaviour {
     public Controller_Actor actorController;
     private Rigidbody actorRigidbody;
     private BoxCollider actorCollider;
-    private RuntimeAnimatorController actorAnimator; 
+    private Animator actorAnimator; 
 
     private int controllerID;
 
-    public List<Sprite> starterSprites;
-    public int spriteToLoad;
     private bool isHacking;
 
     // gameplay properties.
@@ -34,7 +32,7 @@ public class Entity_Actor : MonoBehaviour {
         actorRigidbody = this.gameObject.GetComponent<Rigidbody>();
         actorCollider = this.gameObject.GetComponent<BoxCollider>();
         actorSprite = this.gameObject.GetComponent<SpriteRenderer>();
-        actorAnimator = this.GetComponent<RuntimeAnimatorController>();
+        actorAnimator = this.GetComponent<Animator>();
         setupCharacter();
         isHacking = false;
     }
@@ -52,16 +50,6 @@ public class Entity_Actor : MonoBehaviour {
     // setup the character based on controllerID.
     void setupCharacter()
     {
-
-        #region character sprite selection
-        // TODO - add routiene to get correct player sprites. (Will be set by the spawnManager)
-        if (!(spriteToLoad > starterSprites.Count))
-        {
-            actorSprite.sprite = starterSprites[spriteToLoad];
-        }
-
-        #endregion
-
         // dynamicly adjust the collider accroding to the sprite size
         actorCollider.size = new Vector3(0.15f, 0.2f, 0.0f);
     }
@@ -75,7 +63,7 @@ public class Entity_Actor : MonoBehaviour {
     public void setCharacterSkin(Sprite newCharacterSprite, RuntimeAnimatorController newCharacterAnimation)
     {
         actorSprite.sprite = newCharacterSprite;
-        actorAnimator = newCharacterAnimation;
+        actorAnimator.runtimeAnimatorController = newCharacterAnimation;
     }
 
     public int getControllerID()

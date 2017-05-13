@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 // n86 (Nathan Butt) - Instantiates characters and assigns them a controller. 
 
 public class GameMode : MonoBehaviour {
 
     // Character list and animators to be set for the player when it is instanciated. 
-    public Sprite[] characterSprites;
-    public RuntimeAnimatorController[] characterAnimators;
-    public Entity_Actor characterToSpawn;
+    public List<Sprite> characterSprites;
+    public List<RuntimeAnimatorController> characterAnimators;
+    public GameObject characterToSpawn;
 
     public GameObject UIShell;
 
@@ -26,12 +26,12 @@ public class GameMode : MonoBehaviour {
     {
         for(int i = 0; i < numberOfControllers; i++)
         {
-            characterToSpawn = (Entity_Actor)Instantiate(characterToSpawn, spawnPoint.transform.position, Quaternion.Euler(0, 0, 0));
-            characterToSpawn.setControllerID(i);
-            characterToSpawn.setCharacterSkin(characterSprites[i], characterAnimators[i]);
+            characterToSpawn = (GameObject)Instantiate(characterToSpawn, spawnPoint.transform.position, Quaternion.Euler(0, 0, 0));
+            characterToSpawn.GetComponent<Entity_Actor>().setControllerID(i);
+            Debug.Log(i);
+            characterToSpawn.GetComponent<Entity_Actor>().setCharacterSkin(characterSprites[i], characterAnimators[i]);
             characterToSpawn.transform.Rotate(new Vector3(90.0f, 0, 0));
             characterToSpawn.transform.parent = UIShell.transform;
-           // Instantiate(characterToSpawn,spawnPoint.transform.position,Quaternion.Euler(0,0,0));
         }
     }
 }
