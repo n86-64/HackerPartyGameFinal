@@ -17,7 +17,7 @@ public class OnTriggerSelect : MonoBehaviour {
 
         if (target != null)
         {
-            if (Input.GetButtonDown("HackA"))
+            if (Input.GetButtonDown(this.tag + "AButton"))
             {
                 //start hacking
                 target.GetComponent<Hacking1>().interact();
