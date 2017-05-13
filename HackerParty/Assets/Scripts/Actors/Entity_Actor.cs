@@ -9,6 +9,9 @@ public class Entity_Actor : MonoBehaviour {
     public Controller_Actor actorController;
     private Rigidbody actorRigidbody;
     private BoxCollider actorCollider;
+    private RuntimeAnimatorController actorAnimator; 
+
+    private int controllerID;
 
     public List<Sprite> starterSprites;
     public int spriteToLoad;
@@ -17,36 +20,42 @@ public class Entity_Actor : MonoBehaviour {
     // gameplay properties.
     public float actorVelocity;
 
+    void Start()
+    {
+    }
+
+
     public void setIsHacking(bool b)
     {
         isHacking = b;
     }
     void Awake()
     {
+        actorRigidbody = this.gameObject.GetComponent<Rigidbody>();
+        actorCollider = this.gameObject.GetComponent<BoxCollider>();
+        actorSprite = this.gameObject.GetComponent<SpriteRenderer>();
+        actorAnimator = this.GetComponent<RuntimeAnimatorController>();
         setupCharacter();
         isHacking = false;
     }
 	
-	void Update ()
+
+    void FixedUpdate()
     {
-        // here we get and set our transformatiion via the direction vector from the controller (we will now be changing vector position)
         if (!isHacking)
         {
-            actorRigidbody.velocity = actorController.getControllerDirection() * actorVelocity;
+            actorRigidbody.velocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * actorVelocity;
         }
     }
 
-    // setup the character via apperance etc. 
+
+    // setup the character based on controllerID.
     void setupCharacter()
     {
-        actorRigidbody = this.gameObject.GetComponent<Rigidbody>();
-        actorCollider = this.gameObject.GetComponent<BoxCollider>();
 
         #region character sprite selection
-        // TODO - add routiene to get correct player sprites. 
-        actorSprite = this.gameObject.GetComponent<SpriteRenderer>();
-
-        if(!(spriteToLoad > starterSprites.Count))
+        // TODO - add routiene to get correct player sprites. (Will be set by the spawnManager)
+        if (!(spriteToLoad > starterSprites.Count))
         {
             actorSprite.sprite = starterSprites[spriteToLoad];
         }
@@ -57,4 +66,15 @@ public class Entity_Actor : MonoBehaviour {
         actorCollider.size = new Vector3(0.15f, 0.2f, 0.0f);
     }
 
+    // external setup routienes
+    public void setControllerID(int newID)
+    {
+        controllerID = newID;
+    }
+
+    public void setCharacterSkin(Sprite newCharacterSprite, RuntimeAnimatorController newCharacterAnimation)
+    {
+        actorSprite.sprite = newCharacterSprite;
+        actorAnimator = newCharacterAnimation;
+    }
 }
