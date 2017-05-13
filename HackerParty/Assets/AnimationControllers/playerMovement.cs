@@ -14,9 +14,10 @@ public class playerMovement : MonoBehaviour {
 
     void FixedUpdate()
     {
+
         //change where the v and h values are found based on the input
-        float vertical = Input.GetAxis("Vertical");
-        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Player" + this.gameObject.GetComponent<Entity_Actor>().getControllerID() + "Vertical");
+        float horizontal = Input.GetAxis("Player" + this.gameObject.GetComponent<Entity_Actor>().getControllerID() + "Horizontal");
         MovementManager(vertical, horizontal);
     }
 
