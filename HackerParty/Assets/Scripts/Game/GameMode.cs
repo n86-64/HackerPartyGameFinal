@@ -8,6 +8,9 @@ public class GameMode : MonoBehaviour {
     // Character list and animators to be set for the player when it is instanciated. 
     public Sprite[] characterSprites;
     public RuntimeAnimatorController[] characterAnimators;
+    public Entity_Actor characterToSpawn;
+
+    public GameObject UIShell;
 
     public GameObject spawnPoint;
     int numberOfControllers;
@@ -16,18 +19,19 @@ public class GameMode : MonoBehaviour {
 	void Start ()
     {
         numberOfControllers = Input.GetJoystickNames().Length;
-        //instanciateObjects(Input.GetJoystickNames().Length);
+        instanciateObjects(Input.GetJoystickNames().Length);
 	}
 
     void instanciateObjects(int controllerNumbers)
     {
-        Entity_Actor characterToSpawn;
         for(int i = 0; i < numberOfControllers; i++)
         {
-            characterToSpawn = new Entity_Actor();
+            characterToSpawn = (Entity_Actor)Instantiate(characterToSpawn, spawnPoint.transform.position, Quaternion.Euler(0, 0, 0));
             characterToSpawn.setControllerID(i);
             characterToSpawn.setCharacterSkin(characterSprites[i], characterAnimators[i]);
-            Instantiate(characterToSpawn);
+            characterToSpawn.transform.Rotate(new Vector3(90.0f, 0, 0));
+            characterToSpawn.transform.parent = UIShell.transform;
+           // Instantiate(characterToSpawn,spawnPoint.transform.position,Quaternion.Euler(0,0,0));
         }
     }
 }
